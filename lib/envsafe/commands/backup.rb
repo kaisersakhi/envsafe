@@ -1,4 +1,5 @@
 require "fileutils"
+require "json"
 
 module Envsafe::Commands; end
 
@@ -12,7 +13,7 @@ class Envsafe::Commands::Backup
     ENV_EXAMPLE = ".example.env"
 
     def run(tag: nil)
-      tag = nil if tag == "tag" # Set it to null and ignore "tag" str as a valid tag.
+      tag = nil if tag == "tag" # Set it to nil and ignore "tag" string as an invalid tag.
 
       unless File.exist?(ENV_FILE)
         puts "❌ No .env file found in current directory."
@@ -30,7 +31,31 @@ class Envsafe::Commands::Backup
       dest_path = File.join(BACKUP_DIR, filename)
 
       FileUtils.cp(ENV_FILE, dest_path)
+
       puts "✅ Backed up .env as #{filename}"
+
+      update_stack(filename, timestamp, tag)
+    end
+
+    private
+
+    def update_stack(filename, timestamp, tag)
+      stack = []
+
+      if File.exist?(STACK_FILE)
+        content = File.read(STACK_FILE)
+        stack = JSON.parse(content)
+      end
+
+      entry = {
+        "file" => filename,
+        "tag" => tag,
+        "timestamp" => timestamp
+      }
+
+      stack.unshift(entry)
+
+      File.write(STACK_FILE, JSON.pretty_generate(stack))
     end
   end
 end
