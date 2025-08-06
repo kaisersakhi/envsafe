@@ -2,6 +2,7 @@ require "thor"
 require_relative "commands/backup"
 require_relative "commands/ignore"
 require_relative "commands/list"
+require_relative "commands/clear"
 
 module Envsafe
   class CLI < Thor
@@ -19,6 +20,11 @@ module Envsafe
     desc("list [LIMIT]", "List all backups, optionally limit the number shown")
     def list(limit = nil)
       Envsafe::Commands::List.run(limit)
+    end
+
+    desc("clear", "Delete all backups")
+    def clear
+      Envsafe::Commands::Clear.run()
     end
   end
 end
