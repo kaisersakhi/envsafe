@@ -37,9 +37,9 @@ class Envsafe::Commands::List
 
       stack = stack[0, n]
 
-      rows = stack.map { |item| [File.join(Envsafe::BACKUP_DIR, item["file"]), item["tag"], item["timestamp"], Time.at(item["timestamp"])] }
+      rows = stack.each_with_index.map { |item, index| [index, File.join(Envsafe::BACKUP_DIR, item["file"]), item["tag"], item["timestamp"], Time.at(item["timestamp"])] }
 
-      Terminal::Table.new(headings: ["File", "Tag", "Timestamp", "Backed up at"], rows: rows)
+      Terminal::Table.new(headings: ["Version", "File", "Tag", "Timestamp", "Backed up at"], rows: rows)
     end
   end
 end
