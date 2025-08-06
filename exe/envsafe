@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
 require "envsafe"
+
+Envsafe::CLI.start(ARGV)

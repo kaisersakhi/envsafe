@@ -27,6 +27,7 @@ GEM
     reline (0.6.2)
       io-console (~> 0.5)
     stringio (3.1.7)
+    thor (1.4.0)
 
 PLATFORMS
   arm64-darwin-24
@@ -37,6 +38,7 @@ DEPENDENCIES
   irb
   minitest (~> 5.16)
   rake (~> 13.0)
+  thor
 
 BUNDLED WITH
    2.7.0
