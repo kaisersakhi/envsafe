@@ -1,15 +1,16 @@
+require_relative '../constants'
+
 module Envsafe::Commands; end
 
 class Envsafe::Commands::Ignore
   class << self
-    IGNORE_FILE = ".gitignore"
     def run
-      unless File.exist?(IGNORE_FILE) && File.readable?(IGNORE_FILE) && File.writable?(IGNORE_FILE)
+      unless File.exist?(Envsafe::IGNORE_FILE) && File.readable?(Envsafe::IGNORE_FILE) && File.writable?(Envsafe::IGNORE_FILE)
         puts "❌ Couldn't load .gitignore or either the file can't be read or written."
         return
       end
 
-      File.foreach(IGNORE_FILE) do |line|
+      File.foreach(Envsafe::IGNORE_FILE) do |line|
         if line.strip() == ".envsafe"
           puts "✅ .envsafe is already ignored."
 
@@ -17,7 +18,7 @@ class Envsafe::Commands::Ignore
         end
       end
 
-      File.open(IGNORE_FILE, "a") do |file|
+      File.open(Envsafe::IGNORE_FILE, "a") do |file|
         file.puts(".envsafe")
         puts "✅ .envsafe has been ignored."
       end

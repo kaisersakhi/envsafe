@@ -10,4 +10,6 @@ gem "rake", "~> 13.0"
 
 gem "minitest", "~> 5.16"
 
-gem "thor"
+gem "terminal-table", "~> 4.0"
+
+gem "thor", "~> 1.4"

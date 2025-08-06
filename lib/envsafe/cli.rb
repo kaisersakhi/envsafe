@@ -1,6 +1,7 @@
 require "thor"
 require_relative "commands/backup"
 require_relative "commands/ignore"
+require_relative "commands/list"
 
 module Envsafe
   class CLI < Thor
@@ -14,11 +15,16 @@ module Envsafe
     def ignore
       Envsafe::Commands::Ignore.run()
     end
+
+    desc("list [LIMIT]", "List all backups, optionally limit the number shown")
+    def list(limit = nil)
+      Envsafe::Commands::List.run(limit)
+    end
   end
 end
 
 # backup [--tag TAG]        "backup current .env with optional tag"
-# list                      "list all save .env version"
+# list     n                "list all save .env version"
 # checkout version/tag      "restore a specific backup to .env"
 # checkout main             "restore the orgianl .env saved before the first backup"
 # pop                       "restore and delete the latest backup (like git stash pop)"
