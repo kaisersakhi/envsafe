@@ -54,8 +54,32 @@ class Envsafe::BackStack
       puts "✅ Backed up .env as #{filename}"
     end
 
-    def top
+    def restore_by_tag(tag)
+      entry = stack_instance.find { |e| e["tag"] == tag }
 
+      return nil if entry.nil?
+
+      Envsafe::FileStore.restore(entry)
+
+      true
+    end
+
+    def restore_by_sindex(sindex)
+      entry = stack_instance[sindex]
+
+      Envsafe::FileStore.restore(entry)
+
+      true
+    end
+
+    def restore_top
+      return nil if stack_instance.empty?
+
+      entry = stack_instance[0]
+
+      Envsafe::FileStore.restore(entry)
+
+      true
     end
 
     private

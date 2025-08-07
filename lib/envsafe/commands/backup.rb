@@ -20,7 +20,7 @@ class Envsafe::Commands::Backup
         return
       end
 
-      unless tag.nil? && Envsafe::Utils.unique_tag?(tag, Envsafe::BackStack.stack)
+      if tag && Envsafe::Utils.tag_present?(tag, Envsafe::BackStack.stack)
         puts "❌ Tag already exists in the stack. Please use a different tag."
 
         return

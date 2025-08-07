@@ -5,15 +5,23 @@ module Envsafe
     end
 
     def self.invalid_tag?(tag)
-      not(valid_tag?(tag))
+      not valid_tag?(tag)
+    end
+
+    def self.tag_present?(tag, back_stack)
+      back_stack.any? { |entry| entry["tag"] == tag }
     end
 
     def self.unique_tag?(tag, back_stack)
-      back_stack.each do |entry|
-        return false if tag == entry["tag"]
-      end
+      not(tag_present?(tag, back_stack))
+    end
 
-      true
+    def self.parse_int(num)
+      return nil if num.nil?
+
+      Integer(num)
+    rescue Error
+      nil
     end
   end
 end

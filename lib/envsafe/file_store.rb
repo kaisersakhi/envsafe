@@ -25,6 +25,14 @@ class Envsafe::FileStore
       [(tag ? "#{timestamp}_#{tag}.env" : "#{timestamp}.env"), timestamp]
     end
 
+    def restore(stack_entry)
+      filepath = full_filepath(stack_entry)
+
+      backup_current_to_main_env()
+
+      FileUtils.cp(filepath, Envsafe::ENV_FILE)
+    end
+
     # Deletes the file after copying it to main.
     def restore_main(stack_entry)
       backup_current_to_main_env()
@@ -47,7 +55,7 @@ class Envsafe::FileStore
     def filename(stack_entry)
       return if stack_entry.nil?
 
-      file, tag, timestamp = dse
+      file, tag, timestamp = dse(stack_entry)
 
       tag ? "#{timestamp}_#{tag}.env" : "#{timestamp}.env"
     end

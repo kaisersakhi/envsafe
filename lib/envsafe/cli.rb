@@ -3,6 +3,7 @@ require_relative "commands/backup"
 require_relative "commands/ignore"
 require_relative "commands/list"
 require_relative "commands/clear"
+require_relative "commands/restore"
 
 module Envsafe
   class CLI < Thor
@@ -29,7 +30,7 @@ module Envsafe
 
     desc("restore", "Restore a specific backup to .env")
     option(:tag, aliases: "-t", type: :string, desc: "Restores tagged backup")
-    option(:sindex, aliases: "-i", type: :string, desc: "Restores backup by stack index")
+    option(:sindex, aliases: "-i", type: :string, desc: "Restores backup by stack index. Use 'list' command to know the index.")
     def restore()
       Envsafe::Commands::Restore.run(tag: options[:tag], sindex: options[:sindex])
     end
