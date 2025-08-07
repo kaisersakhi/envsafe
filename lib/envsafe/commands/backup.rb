@@ -1,6 +1,9 @@
 require "fileutils"
 require "json"
+
+require_relative "../utils"
 require_relative "../constants"
+require_relative "../back_stack"
 
 module Envsafe::Commands; end
 
@@ -9,26 +12,22 @@ class Envsafe::Commands::Backup
     def run(tag: nil)
       tag = nil if tag == "tag" # Set it to nil and ignore "tag" string as an invalid tag.
 
-      unless File.exist?(Envsafe::ENV_FILE)
-        puts "❌ No .env file found in current directory."
+      if tag && Envsafe::Utils.invalid_tag?(tag)
+        puts "❌ Invalid tag...."
+        puts "Use alphanumeric or pure numbers"
+        puts "Special symbols are invalid except: hyphen and underscore"
+
         return
       end
 
-      FileUtils.mkdir_p(Envsafe::BACKUP_DIR)
+      unless tag.nil? && Envsafe::Utils.unique_tag?(tag, Envsafe::BackStack.stack)
+        puts "❌ Tag already exists in the stack. Please use a different tag."
 
-      unless File.exist?(Envsafe::MAIN_ENV)
-        FileUtils.cp(Envsafe::ENV_FILE, Envsafe::MAIN_ENV)
+        return
       end
 
-      timestamp = Time.now.utc.to_i
-      filename = tag ? "#{timestamp}_#{tag}.env" : "#{timestamp}.env"
-      dest_path = File.join(Envsafe::BACKUP_DIR, filename)
 
-      FileUtils.cp(Envsafe::ENV_FILE, dest_path)
-
-      puts "✅ Backed up .env as #{filename}"
-
-      update_stack(filename, timestamp, tag)
+      Envsafe::BackStack.push(tag)
     end
 
     private
