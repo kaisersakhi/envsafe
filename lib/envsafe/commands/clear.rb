@@ -5,6 +5,7 @@ class Envsafe::Commands::Clear
     def run
       return unless user_sure?
 
+      # TODO: check if .envsafe exists only then continue
       if system("rm", "-rf", ".envsafe")
         puts "✅ .envsafe removed successfully!"
       else

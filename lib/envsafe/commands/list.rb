@@ -1,5 +1,7 @@
 require "terminal-table"
+
 require_relative "../constants"
+require_relative "../back_stack"
 
 module Envsafe::Commands; end
 
@@ -29,8 +31,7 @@ class Envsafe::Commands::List
     private
 
     def read_lines(n)
-      stk_content = File.read(Envsafe::STACK_FILE)
-      stack = JSON.parse(stk_content)
+      stack = Envsafe::BackStack.stack()
 
       n = n.nil? ? stack.length : n
       n = stack.size if n > stack.size
@@ -39,7 +40,7 @@ class Envsafe::Commands::List
 
       rows = stack.each_with_index.map { |item, index| [index, File.join(Envsafe::BACKUP_DIR, item["file"]), item["tag"], item["timestamp"], Time.at(item["timestamp"])] }
 
-      Terminal::Table.new(headings: ["Version", "File", "Tag", "Timestamp", "Backed up at"], rows: rows)
+      Terminal::Table.new(headings: ["Index", "File", "Tag", "Timestamp", "Backed up at"], rows: rows)
     end
   end
 end

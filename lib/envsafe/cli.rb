@@ -26,6 +26,25 @@ module Envsafe
     def clear
       Envsafe::Commands::Clear.run()
     end
+
+    desc("restore", "Restore a specific backup to .env")
+    option(:tag, aliases: "-t", type: :string, desc: "Restores tagged backup")
+    option(:sindex, aliases: "-i", type: :string, desc: "Restores backup by stack index")
+    def restore()
+      Envsafe::Commands::Restore.run(tag: options[:tag], sindex: options[:sindex])
+    end
+
+    desc("undo", "Undo last write operation to .env")
+    def undo()
+      Envsafe::Commands::Undo.run()
+    end
+
+    desc("show", "Show contents of file using either version or stack index")
+    option(:tag, aliases: "-t", type: :string, desc: "Show by tag")
+    option(:sindex, aliases: "-i", type: :string, desc: "Show by stack index")
+    def show()
+      Envsafe::Commands::Show.run(tag: options[:tag], sindex: options[:sindex])
+    end
   end
 end
 
@@ -40,4 +59,4 @@ end
 # check                     "compare .env with .example.env"
 # sync                      "sync .example with .env creates if doesn't exist"
 # diff  version/tag         "show diff with the currrent and provided version or tag"
-#
+# undo                      "retores last edit" if i say "envsafe restore" it will overwrite but keep the option for user to retore the last modified version.
