@@ -194,7 +194,7 @@ your-project/
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/yourusername/envsafe.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kaisersakhi/envsafe.
 
 ## License
 
