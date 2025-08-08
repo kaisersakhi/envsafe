@@ -5,6 +5,7 @@ require_relative "commands/list"
 require_relative "commands/clear"
 require_relative "commands/restore"
 require_relative "commands/undo"
+require_relative "commands/show"
 
 module Envsafe
   class CLI < Thor
@@ -50,14 +51,14 @@ module Envsafe
   end
 end
 
-✅ # backup [--tag TAG]        "backup current .env with optional tag"
-✅# list     n                "list all save .env version"
-✅# restore version/tag      "restore a specific backup to .env"
+#✅ # backup [--tag TAG]        "backup current .env with optional tag"
+#✅# list     n                "list all save .env version"
+#✅# restore version/tag      "restore a specific backup to .env"
 # current                   "show which backup is currenly checked out if any"
 # delete  version/tag       "delete a specific backup version"
-✅# clear                     "clear all backups"
+#✅# clear                     "clear all backups"
 # check                     "compare .env with .example.env"
 # sync                      "sync .example with .env creates if doesn't exist"
 # diff  version/tag         "show diff with the currrent and provided version or tag"
-✅# undo                      "retores last edit" if i say "envsafe restore" it will overwrite but keep the option for user to retore the last modified version.
+#✅# undo                      "retores last edit" if i say "envsafe restore" it will overwrite but keep the option for user to retore the last modified version.
 # show

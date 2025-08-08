@@ -64,6 +64,10 @@ class Envsafe::FileStore
       File.join(Envsafe::BACKUP_DIR, filename(stack_entry))
     end
 
+    def file_content(stack_entry)
+      File.read(full_filepath(stack_entry))
+    end
+
     private
 
     # Destructured Stack Entry (dse)

@@ -23,5 +23,9 @@ module Envsafe
     rescue Error
       nil
     end
+
+    def self.print_with_less(content)
+       IO.popen("less", "w") { |io| io.write(content)}
+    end
   end
 end

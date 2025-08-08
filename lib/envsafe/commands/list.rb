@@ -2,6 +2,7 @@ require "terminal-table"
 
 require_relative "../constants"
 require_relative "../back_stack"
+require_relative "../utils"
 
 module Envsafe::Commands; end
 
@@ -25,7 +26,8 @@ class Envsafe::Commands::List
         return
       end
 
-      IO.popen("less", "w") { |io| io.write(read_lines(limit))}
+      file_content = read_lines(limit)
+      Envsafe::Utils.print_with_less(file_content)
     end
 
     private

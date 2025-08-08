@@ -82,6 +82,32 @@ class Envsafe::BackStack
       true
     end
 
+    def show_top()
+      return if stack_instance.empty?
+
+      stack_entry = stack_instance[0]
+
+      file_content = Envsafe::FileStore.file_content(stack_entry)
+
+      Envsafe::Utils.print_with_less(file_content)
+    end
+
+    def show_by_tag(tag)
+      stack_entry = stack_instance.find { |se| se["tag"] == tag }
+
+      file_content = Envsafe::FileStore.file_content(stack_entry)
+
+      Envsafe::Utils.print_with_less(file_content)
+    end
+
+    def show_by_sindex(sindex)
+      stack_entry = stack_instance[sindex]
+
+      file_content = Envsafe::FileStore.file_content(stack_entry)
+
+      Envsafe::Utils.print_with_less(file_content)
+    end
+
     private
 
     def push_entry(filename, tag, timestamp)
