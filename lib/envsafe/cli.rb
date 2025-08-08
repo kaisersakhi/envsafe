@@ -6,6 +6,7 @@ require_relative "commands/clear"
 require_relative "commands/restore"
 require_relative "commands/undo"
 require_relative "commands/show"
+require_relative "commands/delete"
 
 module Envsafe
   class CLI < Thor
@@ -48,6 +49,13 @@ module Envsafe
     def show()
       Envsafe::Commands::Show.run(tag: options[:tag], sindex: options[:sindex])
     end
+
+    desc("delete", "Delete a specifiic backup by tag or sindex")
+    option(:tag, aliases: "-t", type: :string, desc: "Delete by tag")
+    option(:sindex, aliases: "-i", type: :string, desc: "Delete by stack index")
+    def delete()
+      Envsafe::Commands::Delete.run(tag: options[:tag], sindex: options[:sindex])
+    end
   end
 end
 
@@ -61,4 +69,4 @@ end
 # sync                      "sync .example with .env creates if doesn't exist"
 # diff  version/tag         "show diff with the currrent and provided version or tag"
 #✅# undo                      "retores last edit" if i say "envsafe restore" it will overwrite but keep the option for user to retore the last modified version.
-# show
+#✅ show

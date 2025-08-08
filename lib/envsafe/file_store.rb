@@ -16,6 +16,8 @@ class Envsafe::FileStore
 
     def delete_backup(stack_entry)
       File.delete(full_filepath(stack_entry))
+
+      File.exist?(full_filepath(stack_entry))
     end
 
 

@@ -108,6 +108,35 @@ class Envsafe::BackStack
       Envsafe::Utils.print_with_less(file_content)
     end
 
+    def remove_by_sindex(sindex)
+      stack_entry = stack_instance[sindex]
+
+      if Envsafe::FileStore.delete_backup(stack_entry)
+        stack_instance = stack_instance.reject { |se| se == stack_entry }
+
+        write()
+
+        true
+      else
+        false
+      end
+    end
+
+    def remove_by_tag(tag)
+      stack_entry = stack_instance.find { |se| se["tag"] == tag }
+
+
+      if Envsafe::FileStore.delete_backup(stack_entry)
+        stack_instance = stack_instance.reject { |se| se == stack_entry }
+
+        write()
+
+        true
+      else
+        false
+      end
+    end
+
     private
 
     def push_entry(filename, tag, timestamp)
