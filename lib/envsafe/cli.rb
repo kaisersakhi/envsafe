@@ -4,6 +4,7 @@ require_relative "commands/ignore"
 require_relative "commands/list"
 require_relative "commands/clear"
 require_relative "commands/restore"
+require_relative "commands/undo"
 
 module Envsafe
   class CLI < Thor
