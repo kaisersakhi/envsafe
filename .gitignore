@@ -10,3 +10,4 @@
 .env
 .envsafe
 playground.rb
+envsafe-*
